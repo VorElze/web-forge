@@ -118,6 +118,8 @@ function run(cmd, opts = {}) {
     shell: true,
     encoding: 'utf8',
     timeout: opts.timeout || 300000,
+    // The inspector prints a long log for tall pages; the 1 MB default kills it mid-run.
+    maxBuffer: 32 * 1024 * 1024,
     env: { ...process.env, CI: '1', NO_COLOR: '1' },
   });
   const out = `${res.stdout || ''}${res.stderr || ''}`.trim();
