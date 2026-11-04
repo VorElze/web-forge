@@ -351,7 +351,7 @@ function checkBuild(cmds, noRun) {
 function checkGraph() {
   const report = path.join(projectRoot, 'graphify-out', 'GRAPH_REPORT.md');
   if (!exists(report)) {
-    return { status: STATUS.FAIL, detail: 'graphify-out/GRAPH_REPORT.md tidak ada', hint: 'jalankan: graphify --code-only' };
+    return { status: STATUS.FAIL, detail: 'graphify-out/GRAPH_REPORT.md tidak ada', hint: 'jalankan: graphify --code-only, atau: node scripts/codemap.mjs' };
   }
   const size = fs.statSync(report).size;
   if (size < 200) return { status: STATUS.FAIL, detail: `GRAPH_REPORT.md terlalu kecil (${size} B)` };
