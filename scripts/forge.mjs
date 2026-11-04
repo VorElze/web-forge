@@ -411,7 +411,7 @@ function checkDesignAudit(cfg, url, noRun) {
   for (const route of routes) {
     const target = `${url.replace(/\/$/, '')}${route}`;
     const outDir = path.join(projectRoot, '.forge', 'audit', route.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'home');
-    const r = run(`node "${inspector}" "${target}" --out "${outDir}"`, { timeout: 180000 });
+    const r = run(`node "${inspector}" "${target}" --out "${outDir}"`, { timeout: 300000 });
     let report = null;
     const rp = path.join(outDir, 'report.json');
     if (exists(rp)) {
