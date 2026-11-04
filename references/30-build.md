@@ -20,7 +20,7 @@ Peta kode dibangun sebelum menulis fitur dan dibangun ulang sebelum menutup
 pekerjaan:
 
 ```bash
-graphify --code-only          # menghasilkan graphify-out/GRAPH_REPORT.md
+graphify update .             # menghasilkan graphify-out/GRAPH_REPORT.md + graph.json
 ```
 
 Sebelum mengubah apa pun, tanyakan ke peta: modul mana yang memiliki perilaku

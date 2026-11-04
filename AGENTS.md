@@ -30,7 +30,7 @@ Do not start Phase 3 (code) until `brief`, `spec`, and `plan` are PASS.
 
 - Run `forge gate` after each thin slice, not once at the end.
 - Before opening a new area of the codebase, read
-  `graphify-out/GRAPH_REPORT.md` (run `graphify --code-only` or
+  `graphify-out/GRAPH_REPORT.md` (run `graphify update .` or
   `node <web-forge>/scripts/codemap.mjs` if it is stale).
 - After a slice that touches UI, run `forge gate --url <running-url>` so the
   visual audit runs on real pages.

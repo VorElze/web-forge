@@ -26,7 +26,9 @@ akan SKIP, dan rilis tidak bisa dibuka dengan `--strict`.
 
 ### graphify (disarankan) / codemap (bawaan)
 
-- Bila tersedia: `graphify --code-only` → `graphify-out/GRAPH_REPORT.md`.
+- Bila tersedia: `graphify update .` → `graphify-out/GRAPH_REPORT.md` + `graph.json`
+  (tidak butuh kunci LLM; verifikasi pada graphify 0.9.94: 297 node, 342 edge).
+  Muat ulang laporan saja: `graphify cluster-only . --no-label --no-viz`.
 - Bila tidak: pakai bawaan repo ini, tanpa dependensi:
 
 ```bash
@@ -36,6 +38,10 @@ node scripts/codemap.mjs          # menghasilkan graphify-out/GRAPH_REPORT.md
 Keduanya menulis ke berkas yang sama sehingga gerbang `graph` tetap sah.
 Graphify memberi peta relasi lebih kaya; codemap memberi inventaris, peta
 impor, dan berkas terbesar — cukup untuk mencegah agen membaca seluruh repo.
+
+Catatan: jangan mengarahkan `scripts.build` proyek ke `codemap.mjs` bila Anda
+memakai `graphify` — `forge gate` menjalankan build sebelum memeriksa peta,
+sehingga peta graphify akan tertimpa versi yang lebih dangkal.
 
 ### design-taste-frontend (inspector visual)
 Dipasang sebagai skill klien. Berkas yang dipakai:

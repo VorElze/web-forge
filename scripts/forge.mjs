@@ -351,7 +351,7 @@ function checkBuild(cmds, noRun) {
 function checkGraph() {
   const report = path.join(projectRoot, 'graphify-out', 'GRAPH_REPORT.md');
   if (!exists(report)) {
-    return { status: STATUS.FAIL, detail: 'graphify-out/GRAPH_REPORT.md tidak ada', hint: 'jalankan: graphify --code-only, atau: node scripts/codemap.mjs' };
+    return { status: STATUS.FAIL, detail: 'graphify-out/GRAPH_REPORT.md tidak ada', hint: 'jalankan: graphify update ., atau: node scripts/codemap.mjs' };
   }
   const size = fs.statSync(report).size;
   if (size < 200) return { status: STATUS.FAIL, detail: `GRAPH_REPORT.md terlalu kecil (${size} B)` };
@@ -361,7 +361,7 @@ function checkGraph() {
   return {
     status: stale ? STATUS.WARN : STATUS.PASS,
     detail: `${(size / 1024).toFixed(1)} KB${stale ? ', lebih lama dari kode terakhir' : ''}`,
-    hint: stale ? 'bangun ulang: graphify --code-only' : undefined,
+    hint: stale ? 'bangun ulang: graphify update .' : undefined,
   };
 }
 
@@ -504,7 +504,7 @@ function cmdDoctor() {
     console.log(` ${mark} ${r.bin.padEnd(15)} ${v}${tag}`);
   }
   console.log(`\n ${inspector ? c.ok(' OK ') : c.warn(' -- ')} inspect.mjs      ${inspector || c.dim('skill design-taste-frontend belum ada')}`);
-  console.log(` ${hasGraphifyOut ? c.ok(' OK ') : c.warn(' -- ')} graphify-out/    ${hasGraphifyOut ? c.dim('peta kode tersedia') : c.dim('jalankan: graphify --code-only')}`);
+  console.log(` ${hasGraphifyOut ? c.ok(' OK ') : c.warn(' -- ')} graphify-out/    ${hasGraphifyOut ? c.dim('peta kode tersedia') : c.dim('jalankan: graphify update .')}`);
   console.log(missingRequired ? c.bad(`\n${missingRequired} alat wajib belum ada. Perbaiki sebelum mulai.\n`) : c.ok('\nSemua alat wajib tersedia.\n'));
   return missingRequired ? 1 : 0;
 }

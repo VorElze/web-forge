@@ -88,7 +88,7 @@ the reason into `docs/DECISIONS.md` and recording the SKIP in the ledger.
 | **P0 Intake** | `docs/BRIEF.md` with 8 answers + one named reference | `forge gate` → `brief` PASS. No reference artifact = do not start. |
 | **P1 Spec** | `docs/SPEC.md`: goals, non-goals, anti-goals, sitemap, data model, completion criteria | Every criterion is a number or a yes/no check. No TBD. |
 | **P2 Plan** | `docs/PLAN.md`: tasks ≤ one session, each with `Files` and `Gate:` | `plan` PASS (tasks ≥ 3, every task gated) |
-| **P3 Foundation** | Shell, navigation, design tokens, `graphify --code-only` map | Inspector 0 FAIL at 390/768/1440 on the empty shell; `graph` PASS |
+| **P3 Foundation** | Shell, navigation, design tokens, `graphify update .` map | Inspector 0 FAIL at 390/768/1440 on the empty shell; `graph` PASS |
 | **P4 Core screens** | The three flows the brief named | Each screen: empty, loading, error, keyboard, mobile. Routes 200. |
 | **P5 Remaining** | Secondary screens, auth, admin, forms | Route matrix × 2 identities, zero 500 |
 | **P6 Harden** | Security, performance, a11y, uploads | Contrast ≥ 4.5:1, targets ≥ 44 px, no horizontal scroll at 5 widths, no secret in git |

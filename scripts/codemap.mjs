@@ -139,7 +139,7 @@ md.push(`Dibangun: ${now}`);
 md.push(`Akar: \`${root}\``);
 md.push(`Berkas dipindai: **${files.length}** · baris kode: **${codeLines}** · total baris teks: ${totalLines}`, '');
 md.push('> Peta ini dibuat oleh `scripts/codemap.mjs` (tanpa dependensi).');
-md.push('> Bila `graphify` terpasang, jalankan `graphify --code-only` untuk peta relasi yang lebih kaya.');
+md.push('> Bila `graphify` terpasang, jalankan `graphify update .` untuk peta relasi yang lebih kaya.');
 md.push('');
 md.push('## Bahasa', '', '| Bahasa | Berkas | Baris | Ukuran |', '|---|---:|---:|---:|');
 for (const [lang, v] of [...byLang.entries()].sort((a, b) => b[1].lines - a[1].lines)) {
