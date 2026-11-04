@@ -144,6 +144,32 @@ test('codemap → graph PASS', () => {
   return 'GRAPH_REPORT.md dibuat dan diterima gerbang';
 });
 
+// 9. a project adopted without a ledger must WARN, never PASS — and still block release
+test('tanpa ledger → WARN, rilis tetap tertutup', () => {
+  const dir = fx('noledger');
+  forge(['new', 'Uji', '--dir', dir], dir);
+  fs.rmSync(path.join(dir, '.forge', 'ledger.json'));
+  const p = gateJson(dir);
+  assert(okStatus(get(p, 'ledger').status, 'WARN'), `seharusnya WARN, dapat ${get(p, 'ledger').status}`);
+  const r = forge(['gate', '--no-run', '--json', '--release', '--project', dir], dir);
+  const rel = JSON.parse(r.stdout);
+  assert(okStatus(get(rel, 'ledger').status, 'FAIL'), `rilis harus FAIL, dapat ${get(rel, 'ledger').status}`);
+  return 'tanpa ledger WARN; --release FAIL';
+});
+
+// 10. ledger init adopts an existing project without touching its docs
+test('ledger init → berkas dibuat, dokumen tidak ditimpa', () => {
+  const dir = fx('init');
+  fs.mkdirSync(path.join(dir, 'docs'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'docs', 'BRIEF.md'), '# Brief asli\njangan diubah\n');
+  const r = forge(['ledger', 'init', '--dir', dir], dir);
+  assert(r.status === 0, `init gagal: ${r.stderr}`);
+  assert(fs.readFileSync(path.join(dir, 'docs', 'BRIEF.md'), 'utf8').includes('jangan diubah'), 'BRIEF ditimpa');
+  const ledger = JSON.parse(fs.readFileSync(path.join(dir, '.forge', 'ledger.json'), 'utf8'));
+  assert(Object.keys(ledger.phases).length === 10, `fase tidak lengkap: ${Object.keys(ledger.phases).length}`);
+  return 'config + ledger dibuat, BRIEF utuh';
+});
+
 const failed = results.filter((r) => !r.ok);
 console.log('\nweb-forge selftest\n');
 for (const r of results) {

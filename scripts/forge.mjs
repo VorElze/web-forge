@@ -124,6 +124,12 @@ function run(cmd, opts = {}) {
   return { code: res.status, out: out.length > 6000 ? out.slice(-6000) : out, error: res.error };
 }
 
+// A browser that stalls is not a finding. Waiting between retries needs a blocking
+// sleep because the gate runs synchronously end to end.
+function sleepSync(ms) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
 function loadConfig() {
   const p = path.join(projectRoot, '.forge', 'config.json');
   const defaults = {
@@ -407,32 +413,71 @@ function checkDesignAudit(cfg, url, noRun) {
   }
   const routes = cfg.auditRoutes || ['/'];
   const results = [];
+  const crashNotes = [];
+  let retries = 0;
   let fails = 0;
   for (const route of routes) {
     const target = `${url.replace(/\/$/, '')}${route}`;
     const outDir = path.join(projectRoot, '.forge', 'audit', route.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'home');
-    const r = run(`node "${inspector}" "${target}" --out "${outDir}"`, { timeout: 300000 });
-    let report = null;
     const rp = path.join(outDir, 'report.json');
-    if (exists(rp)) {
-      try {
-        report = JSON.parse(read(rp));
-      } catch {}
+
+    // A report left by an earlier run must never vouch for this one.
+    const attempt = () => {
+      if (exists(rp)) fs.rmSync(rp);
+      const r = run(`node "${inspector}" "${target}" --out "${outDir}"`, { timeout: 300000 });
+      let report = null;
+      if (exists(rp)) {
+        try {
+          report = JSON.parse(read(rp));
+        } catch {}
+      }
+      const count = (report?.issues || report?.findings || []).filter((i) => (i.severity || i.level || '').toUpperCase() === 'FAIL').length;
+      return { r, count };
+    };
+
+    let { r, count } = attempt();
+    // Chrome occasionally stalls or fails to start (CDP timeout, busy machine).
+    // Retry twice with a longer wait before blaming the page.
+    for (const wait of [2000, 6000]) {
+      if (r.code === 0 || count > 0) break;
+      sleepSync(wait);
+      ({ r, count } = attempt());
+      retries++;
     }
-    const count = (report?.issues || report?.findings || []).filter((i) => (i.severity || i.level || '').toUpperCase() === 'FAIL').length;
-    if (r.code !== 0 || count > 0) fails++;
+
+    if (r.code !== 0 || count > 0) {
+      fails++;
+      if (!count) {
+        // The meter found nothing: the process itself died. Say why instead of printing FAIL(0).
+        const last = (r.out || '').split('\n').filter(Boolean).pop();
+        const why = r.error ? `${r.error.code || r.error.message}` : null;
+        crashNotes.push(`${route}: ${[last, why].filter(Boolean).join(' | ').slice(0, 160) || 'tanpa keluaran'}`);
+      }
+    }
     results.push(`${route}:${r.code === 0 && count === 0 ? 'ok' : `FAIL(${count})`}`);
   }
   return {
     status: fails ? STATUS.FAIL : STATUS.PASS,
-    detail: `${results.join(' ')} @ ${(cfg.widths || []).join('/')}px`,
-    hint: fails ? 'buka .forge/audit/*/report.json untuk temuan' : undefined,
+    detail: `${results.join(' ')} @ ${(cfg.widths || []).join('/')}px${retries ? ` (${retries} ulang)` : ''}`,
+    hint: fails
+      ? crashNotes.length
+        ? `audit berhenti sendiri: ${crashNotes.slice(0, 2).join(' | ')}`
+        : 'buka .forge/audit/*/report.json untuk temuan'
+      : undefined,
   };
 }
 
 function checkLedger(release) {
   const ledger = loadLedger();
-  if (!ledger) return { status: STATUS.FAIL, detail: '.forge/ledger.json tidak ada', hint: 'jalankan: forge new' };
+  if (!ledger) {
+    return release
+      ? { status: STATUS.FAIL, detail: '.forge/ledger.json tidak ada', hint: 'jalankan: forge ledger init' }
+      : {
+          status: STATUS.WARN,
+          detail: 'fase belum dilacak (.forge/ledger.json tidak ada)',
+          hint: 'proyek lama: forge ledger init; proyek baru: forge new',
+        };
+  }
   const phases = Object.entries(ledger.phases || {});
   const approved = phases.filter(([, v]) => v.status === 'approved');
   const pending = phases.filter(([, v]) => v.status !== 'approved').map(([k]) => k);
@@ -591,6 +636,39 @@ Setiap task ≤ 1 sesi kerja. Jangan menulis kode sebelum task punya baris Gate.
 - Gate: php artisan test / npm test hijau, rute matrix 0×500
 `;
 
+const PHASES = {
+  P0: 'Intake',
+  P1: 'Spec',
+  P2: 'Plan',
+  P3: 'Fondasi',
+  P4: 'Layar inti',
+  P5: 'Layar sisa',
+  P6: 'Harden',
+  P7: 'Prove',
+  P8: 'Ship',
+  P9: 'Handoff',
+};
+
+function defaultConfig(name, stack) {
+  return {
+    project: name,
+    stack,
+    noExternalAssets: false,
+    requireGates: ['brief', 'spec', 'plan', 'encoding', 'secrets', 'tests', 'graph'],
+    auditRoutes: ['/'],
+    widths: [390, 768, 1440],
+    commands: {},
+  };
+}
+
+function defaultLedger(name, stack) {
+  const phases = {};
+  for (const [id, label] of Object.entries(PHASES)) {
+    phases[id] = { name: label, status: 'pending', skills: {} };
+  }
+  return { version: 1, project: name, stack, created: new Date().toISOString(), phases };
+}
+
 function cmdNew() {
   const name = args._[1];
   if (!name) {
@@ -621,37 +699,12 @@ function cmdNew() {
 
   const cfgPath = path.join(dir, '.forge', 'config.json');
   if (!exists(cfgPath)) {
-    saveJson(cfgPath, {
-      project: name,
-      stack,
-      noExternalAssets: false,
-      requireGates: ['brief', 'spec', 'plan', 'encoding', 'secrets', 'tests', 'graph'],
-      auditRoutes: ['/'],
-      widths: [390, 768, 1440],
-      commands: {},
-    });
+    saveJson(cfgPath, defaultConfig(name, stack));
   }
 
   const ledgerPath = path.join(dir, '.forge', 'ledger.json');
   if (!exists(ledgerPath)) {
-    saveJson(ledgerPath, {
-      version: 1,
-      project: name,
-      stack,
-      created: new Date().toISOString(),
-      phases: {
-        P0: { name: 'Intake', status: 'pending', skills: {} },
-        P1: { name: 'Spec', status: 'pending', skills: {} },
-        P2: { name: 'Plan', status: 'pending', skills: {} },
-        P3: { name: 'Fondasi', status: 'pending', skills: {} },
-        P4: { name: 'Layar inti', status: 'pending', skills: {} },
-        P5: { name: 'Layar sisa', status: 'pending', skills: {} },
-        P6: { name: 'Harden', status: 'pending', skills: {} },
-        P7: { name: 'Prove', status: 'pending', skills: {} },
-        P8: { name: 'Ship', status: 'pending', skills: {} },
-        P9: { name: 'Handoff', status: 'pending', skills: {} },
-      },
-    });
+    saveJson(ledgerPath, defaultLedger(name, stack));
   }
 
   console.log(c.ok(`\nProyek "${name}" disiapkan di ${dir}`));
@@ -778,9 +831,35 @@ function renderReport(p) {
 function cmdLedger() {
   const sub = args._[1];
   const ledgerPath = path.join(projectRoot, '.forge', 'ledger.json');
+
+  if (sub === 'init') {
+    const dir = path.resolve(args.dir || projectRoot);
+    const name = args.name || path.basename(dir);
+    const stack = args.stack || 'auto';
+    const made = [];
+    const cfgPath = path.join(dir, '.forge', 'config.json');
+    if (!exists(cfgPath)) {
+      saveJson(cfgPath, defaultConfig(name, stack));
+      made.push('.forge/config.json');
+    }
+    const target = path.join(dir, '.forge', 'ledger.json');
+    if (!exists(target)) {
+      saveJson(target, defaultLedger(name, stack));
+      made.push('.forge/ledger.json');
+    }
+    if (!made.length) {
+      console.log(c.dim('ledger dan config sudah ada; tidak ada yang ditimpa'));
+      return 0;
+    }
+    console.log(c.ok(`${made.join(' + ')} dibuat untuk "${name}"`));
+    console.log(c.dim('  semua fase pending — tandai setelah buktinya ada:'));
+    console.log(c.dim('  forge ledger mark <skill> --phase P3 --proof docs/PLAN.md'));
+    return 0;
+  }
+
   const ledger = loadLedger();
   if (!ledger) {
-    console.error('ledger belum ada. jalankan: forge new "<nama>"');
+    console.error('ledger belum ada. jalankan: forge ledger init');
     return 1;
   }
 
@@ -874,6 +953,7 @@ ${c.bold('web-forge')} — satu perintah, sembilan fase bergerbang.
   node scripts/forge.mjs new "<nama>" [--stack laravel|next|html|api] [--dir <dir>]
   node scripts/forge.mjs gate [--url <url>] [--release] [--strict] [--no-run] [--json]
   node scripts/forge.mjs ledger [list]
+  node scripts/forge.mjs ledger init --dir . --stack laravel
   node scripts/forge.mjs ledger mark <skill> --phase P3 --proof docs/PLAN.md
   node scripts/forge.mjs ledger phase P3 --status approved
   node scripts/forge.mjs phases
