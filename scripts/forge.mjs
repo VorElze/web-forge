@@ -60,6 +60,9 @@ const SKIP_DIRS = new Set([
   '.idea', '.vscode', 'tmp', 'temp',
 ]);
 
+// Cache directories that are not source: artisan/composer regenerate these.
+const SKIP_PATHS = ['bootstrap/cache', '.phpunit.cache'];
+
 const TEXT_EXT = new Set([
   '.php', '.blade.php', '.js', '.mjs', '.cjs', '.ts', '.tsx', '.jsx', '.vue',
   '.svelte', '.css', '.scss', '.html', '.json', '.md', '.yml', '.yaml', '.txt',
@@ -77,7 +80,10 @@ function walk(dir, acc = [], depth = 0) {
   for (const e of entries) {
     if (e.isDirectory()) {
       if (SKIP_DIRS.has(e.name)) continue;
-      walk(path.join(dir, e.name), acc, depth + 1);
+      const abs = path.join(dir, e.name);
+      const relDir = path.relative(projectRoot, abs).split(path.sep).join('/');
+      if (SKIP_PATHS.some((p) => relDir === p || relDir.startsWith(`${p}/`))) continue;
+      walk(abs, acc, depth + 1);
     } else if (e.isFile()) {
       acc.push(path.join(dir, e.name));
     }
@@ -312,7 +318,9 @@ function checkSecrets() {
 
 function checkExternalAssets(cfg) {
   const files = walk(projectRoot).filter((f) => /\.(css|js|mjs|blade\.php|html|vue|svelte)$/i.test(f));
-  const re = /(?:src|href)\s*=\s*["']https?:\/\/|url\(\s*["']?https?:\/\//gi;
+  // Only assets the page loads: script/img/iframe src, CSS url(), and <link href>.
+  // Ordinary <a href="https://..."> outbound links are not external assets.
+  const re = /(?:\bsrc\s*=\s*["']https?:\/\/)|(?:url\(\s*["']?https?:\/\/)|(?:<link\b[^>]*\bhref\s*=\s*["']https?:\/\/)/gi;
   const hits = [];
   for (const f of files) {
     const text = read(f);
