@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "project": "web-forge",
+  "stack": "node",
+  "created": "2026-11-04T00:00:00.000Z",
+  "phases": {
+    "P0": {
+      "name": "Intake",
+      "status": "approved",
+      "at": "2026-11-04T00:00:00.000Z",
+      "skills": {
+        "interview-me": { "verdict": "APPROVE", "proof": "docs/BRIEF.md", "at": "2026-11-04T00:00:00.000Z" },
+        "brainstorming": { "verdict": "APPROVE", "proof": "docs/BRIEF.md", "at": "2026-11-04T00:00:00.000Z" },
+        "context-engineering": { "verdict": "APPROVE", "proof": "AGENTS.md", "at": "2026-11-04T00:00:00.000Z" },
+        "request-token-efficiency": { "verdict": "APPROVE", "proof": "docs/PLAN.md", "at": "2026-11-04T00:00:00.000Z" }
+      }
+    },
+    "P1": {
+      "name": "Spec",
+      "status": "approved",
+      "at": "2026-11-04T00:00:00.000Z",
+      "skills": {
+        "spec-driven-development": { "verdict": "APPROVE", "proof": "docs/SPEC.md", "at": "2026-11-04T00:00:00.000Z" },
+        "measurable-acceptance-criteria": { "verdict": "APPROVE", "proof": "docs/SPEC.md", "at": "2026-11-04T00:00:00.000Z" },
+        "domain-modeling": { "verdict": "APPROVE", "proof": "docs/SPEC.md", "at": "2026-11-04T00:00:00.000Z" },
+        "constraint-driven-development": { "verdict": "APPROVE", "proof": "CONSTRAINTS.md", "at": "2026-11-04T00:00:00.000Z" }
+      }
+    },
+    "P2": {
+      "name": "Plan",
+      "status": "approved",
+      "at": "2026-11-04T00:00:00.000Z",
+      "skills": {
+        "writing-plans": { "verdict": "APPROVE", "proof": "docs/PLAN.md", "at": "2026-11-04T00:00:00.000Z" },
+        "planning-and-task-breakdown": { "verdict": "APPROVE", "proof": "docs/PLAN.md", "at": "2026-11-04T00:00:00.000Z" },
+        "incremental-implementation": { "verdict": "APPROVE", "proof": "docs/PLAN.md", "at": "2026-11-04T00:00:00.000Z" },
+        "lean-build": { "verdict": "APPROVE", "proof": "docs/PLAN.md", "at": "2026-11-04T00:00:00.000Z" },
+        "karpathy-guidelines": { "verdict": "APPROVE", "proof": "docs/DECISIONS.md", "at": "2026-11-04T00:00:00.000Z" }
+      }
+    },
+    "P3": { "name": "Fondasi", "status": "pending", "skills": {} },
+    "P4": { "name": "Layar inti", "status": "pending", "skills": {} },
+    "P5": { "name": "Layar sisa", "status": "pending", "skills": {} },
+    "P6": { "name": "Harden", "status": "pending", "skills": {} },
+    "P7": { "name": "Prove", "status": "pending", "skills": {} },
+    "P8": { "name": "Ship", "status": "pending", "skills": {} },
+    "P9": { "name": "Handoff", "status": "pending", "skills": {} }
+  }
+}

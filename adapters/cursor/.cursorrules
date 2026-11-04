@@ -1,0 +1,25 @@
+# Cursor adapter
+
+Save as `.cursorrules` in the project root (or merge into your existing rules).
+
+```
+When the user asks to build a website or app — "saya ingin membuat website",
+"saya ingin membuat aplikasi", "I want to build a website",
+"I want to build an app", "build me an app", "create a web app" — do not start
+coding. Load the web-forge skill and run its pipeline.
+
+Order:
+1. node <web-forge>/scripts/forge.mjs doctor
+2. node <web-forge>/scripts/forge.mjs new "<name>" --stack <laravel|next|html|api>
+3. Fill docs/BRIEF.md, docs/SPEC.md, docs/PLAN.md.
+4. node <web-forge>/scripts/forge.mjs gate  (require brief/spec/plan PASS)
+5. Build in thin slices, running `gate --url <url>` after each UI change.
+6. Before claiming completion: node <web-forge>/scripts/forge.mjs gate --release --strict
+
+Non-negotiable:
+- SKIP is not PASS; say "not measured".
+- No phase approval without an existing proof file in .forge/ledger.json.
+- Never report an audit result you did not run.
+- Never write source files through a shell pipe (mojibake); use file editing.
+- Report numbers: status codes, counts, widths, contrast, byte sizes.
+```

@@ -1,0 +1,12 @@
+{
+  "project": "web-forge",
+  "stack": "node",
+  "noExternalAssets": true,
+  "requireGates": ["brief", "spec", "plan", "encoding", "secrets", "tests", "build", "graph", "ledger"],
+  "auditRoutes": [],
+  "widths": [390, 768, 1440],
+  "commands": {
+    "test": "npm test",
+    "build": "npm run build"
+  }
+}

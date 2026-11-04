@@ -1,0 +1,208 @@
+{
+  "name": "web-forge",
+  "version": "1.0.0",
+  "license": "MIT",
+  "triggers": {
+    "id": [
+      "saya ingin membuat website",
+      "saya ingin membuat aplikasi",
+      "saya mau bikin website",
+      "buatkan website",
+      "bikin aplikasi",
+      "buatkan web app",
+      "lanjutkan proyek website ini"
+    ],
+    "en": [
+      "I want to build a website",
+      "I want to build an app",
+      "build me a website",
+      "build me an app",
+      "create a web app",
+      "start a new site"
+    ]
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "name": "Intake",
+      "gate": "brief",
+      "deliverable": "docs/BRIEF.md",
+      "skills": [
+        { "id": "interview-me", "required": true, "proof": "docs/BRIEF.md" },
+        { "id": "brainstorming", "required": true, "proof": "docs/BRIEF.md" },
+        { "id": "idea-refine", "required": false, "when": "permintaan masih kabur", "proof": "docs/BRIEF.md" },
+        { "id": "grilling", "required": false, "when": "keputusan berisiko", "proof": "docs/DECISIONS.md" },
+        { "id": "context-engineering", "required": true, "proof": "AGENTS.md" },
+        { "id": "request-token-efficiency", "required": true, "proof": "docs/PLAN.md" }
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "Spec",
+      "gate": "spec",
+      "deliverable": "docs/SPEC.md",
+      "skills": [
+        { "id": "spec-driven-development", "required": true, "proof": "docs/SPEC.md" },
+        { "id": "measurable-acceptance-criteria", "required": true, "proof": "docs/SPEC.md" },
+        { "id": "domain-modeling", "required": true, "proof": "docs/SPEC.md" },
+        { "id": "api-and-interface-design", "required": false, "when": "ada API/kontrak modul", "proof": "docs/SPEC.md" },
+        { "id": "constraint-driven-development", "required": true, "proof": "CONSTRAINTS.md" },
+        { "id": "doubt-driven-development", "required": false, "when": "keputusan sulit dibalik", "proof": "docs/DECISIONS.md" }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Plan",
+      "gate": "plan",
+      "deliverable": "docs/PLAN.md",
+      "skills": [
+        { "id": "writing-plans", "required": true, "proof": "docs/PLAN.md" },
+        { "id": "planning-and-task-breakdown", "required": true, "proof": "docs/PLAN.md" },
+        { "id": "incremental-implementation", "required": true, "proof": "docs/PLAN.md" },
+        { "id": "lean-build", "required": true, "proof": "docs/PLAN.md" },
+        { "id": "karpathy-guidelines", "required": true, "proof": "docs/DECISIONS.md" }
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Fondasi",
+      "gate": "graph",
+      "deliverable": "graphify-out/GRAPH_REPORT.md + shell",
+      "skills": [
+        { "id": "graphify", "required": true, "proof": "graphify-out/GRAPH_REPORT.md" },
+        { "id": "graphify-query-first", "required": true, "proof": "docs/PLAN.md" },
+        { "id": "codebase-design", "required": true, "proof": "docs/DECISIONS.md" },
+        { "id": "design-taste-frontend", "required": true, "proof": ".forge/audit/" },
+        { "id": "frontend-design", "required": true, "proof": "docs/DECISIONS.md" },
+        { "id": "awesome-design-md", "required": false, "when": "butuh arah visual dari acuan nyata", "proof": "docs/SPEC.md" },
+        { "id": "design-md", "required": false, "when": "perlu token desain formal", "proof": "DESIGN.md" },
+        { "id": "popular-web-designs", "required": false, "when": "butuh pola layout teruji", "proof": "docs/SPEC.md" },
+        { "id": "sketch", "required": false, "when": "butuh 2-3 varian cepat", "proof": "docs/DECISIONS.md" },
+        { "id": "quick-mockups", "required": false, "when": "butuh mockup paralel", "proof": "docs/DECISIONS.md" },
+        { "id": "screenshot-to-code", "required": false, "when": "acuan berupa gambar", "proof": "docs/SPEC.md" }
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Layar inti",
+      "gate": "design-audit",
+      "deliverable": "3 alur utama",
+      "skills": [
+        { "id": "surgical-patch", "required": true, "proof": "docs/PLAN.md" },
+        { "id": "ponytail", "required": true, "proof": "docs/DECISIONS.md" },
+        { "id": "forms-and-data-entry", "required": true, "proof": "docs/SPEC.md" },
+        { "id": "impeccable", "required": true, "proof": ".forge/audit/" },
+        { "id": "ui-ux-pro-max", "required": true, "proof": ".forge/audit/" },
+        { "id": "antislop-ui", "required": true, "proof": ".forge/audit/" },
+        { "id": "antislop-layoutmobile", "required": true, "proof": ".forge/audit/" }
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Layar sisa",
+      "gate": "tests",
+      "deliverable": "layar sekunder, auth, admin",
+      "skills": [
+        { "id": "webapp-testing", "required": true, "proof": ".forge/report.json" },
+        { "id": "playwright-cli", "required": true, "proof": ".forge/audit/" },
+        { "id": "live-react-runtime-qa", "required": false, "when": "stack React/Next", "proof": ".forge/report.json" },
+        { "id": "cms-customizer-panel", "required": false, "when": "panel admin/CMS", "proof": "docs/SPEC.md" }
+      ]
+    },
+    {
+      "id": "P6",
+      "name": "Harden",
+      "gate": "secrets",
+      "deliverable": "keamanan, performa, aksesibilitas",
+      "skills": [
+        { "id": "security-and-hardening", "required": true, "proof": "docs/DECISIONS.md" },
+        { "id": "performance-optimization", "required": true, "proof": ".forge/report.md" },
+        { "id": "touch-target-audit", "required": true, "proof": ".forge/report.md" },
+        { "id": "css-overflow-verification", "required": true, "proof": ".forge/report.md" },
+        { "id": "web-design-guidelines", "required": true, "proof": ".forge/report.md" },
+        { "id": "antislop-human", "required": true, "proof": ".forge/report.md" },
+        { "id": "upload-limit-audit", "required": false, "when": "ada unggahan berkas", "proof": "docs/DECISIONS.md" },
+        { "id": "php-upload-size-limits", "required": false, "when": "stack PHP", "proof": "docs/DECISIONS.md" },
+        { "id": "observability-and-instrumentation", "required": true, "proof": "docs/DECISIONS.md" }
+      ]
+    },
+    {
+      "id": "P7",
+      "name": "Prove",
+      "gate": "design-audit",
+      "deliverable": "bukti + verdict",
+      "skills": [
+        { "id": "test-driven-development", "required": true, "proof": ".forge/report.json" },
+        { "id": "tdd", "required": true, "proof": ".forge/report.json" },
+        { "id": "verification-before-completion", "required": true, "proof": ".forge/report.md" },
+        { "id": "gate-harness-selfcheck", "required": true, "proof": ".forge/report.json" },
+        { "id": "code-review", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "requesting-code-review", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "receiving-code-review", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "release-gate-scan", "required": true, "proof": ".forge/report.md" },
+        { "id": "verify-and-stop", "required": true, "proof": ".forge/report.md" },
+        { "id": "dogfood", "required": false, "when": "butuh QA eksploratif", "proof": "docs/HANDOFF.md" },
+        { "id": "code-audit", "required": false, "when": "serah-terima ke pihak lain", "proof": "docs/HANDOFF.md" },
+        { "id": "systematic-debugging", "required": false, "when": "ada bug tanpa sebab jelas", "proof": "docs/DECISIONS.md" },
+        { "id": "safe-refactor", "required": false, "when": "restrukturisasi", "proof": "docs/DECISIONS.md" },
+        { "id": "simplify-code", "required": false, "when": "diff membengkak", "proof": "docs/DECISIONS.md" }
+      ]
+    },
+    {
+      "id": "P8",
+      "name": "Ship",
+      "gate": "tests",
+      "deliverable": "situs live terverifikasi",
+      "skills": [
+        { "id": "git-workflow-and-versioning", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "github", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "shipping-and-launch", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "live-web-release-verification", "required": true, "proof": ".forge/report.md" },
+        { "id": "ci-cd-and-automation", "required": false, "when": "ada pipeline", "proof": ".github/" },
+        { "id": "cpanel-shared-hosting-deploy", "required": false, "when": "hosting cPanel", "proof": "docs/DEPLOY.md" },
+        { "id": "static-cpanel-site-delivery", "required": false, "when": "situs statis di cPanel", "proof": "docs/DEPLOY.md" },
+        { "id": "cleo-hosting", "required": false, "when": "hosting Cleo/DirectAdmin", "proof": "docs/DEPLOY.md" },
+        { "id": "self-hosted-web-service-ops", "required": false, "when": "server sendiri", "proof": "docs/DEPLOY.md" },
+        { "id": "service-availability-diagnosis", "required": false, "when": "situs tampak mati", "proof": "docs/DECISIONS.md" }
+      ]
+    },
+    {
+      "id": "P9",
+      "name": "Handoff",
+      "gate": "ledger",
+      "deliverable": "docs/HANDOFF.md",
+      "skills": [
+        { "id": "documentation-and-adrs", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "finishing-a-development-branch", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "humanizer", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "no-ai-slop", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "stop-slop", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "antislop", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "antislop-code", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "antislop-copywriting", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "avoid-ai-writing", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "ponytail-debt", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "sdlc-review", "required": true, "proof": "docs/HANDOFF.md" },
+        { "id": "portable-app-handoff", "required": false, "when": "aplikasi diserahkan ke perangkat lain", "proof": "docs/HANDOFF.md" },
+        { "id": "task-manager", "required": false, "when": "pekerjaan multi-hari", "proof": "docs/PLAN.md" },
+        { "id": "todo-board", "required": false, "when": "butuh papan tugas bersama", "proof": "docs/PLAN.md" }
+      ]
+    }
+  ],
+  "excluded": {
+    "reason": "Skill non-perangkat-lunak tidak pernah dipaksa; memaksanya menghasilkan slop.",
+    "examples": ["apple-notes", "findmy", "songsee", "arxiv", "roblox-video-render", "absensi-report"]
+  },
+  "gates": {
+    "brief": "docs/BRIEF.md punya 8 jawaban + satu acuan",
+    "spec": "docs/SPEC.md punya sasaran, non-sasaran, kriteria selesai, tanpa TBD",
+    "plan": "docs/PLAN.md punya >=3 task, semuanya berbaris Gate:",
+    "encoding": "tidak ada BOM, tidak ada mojibake",
+    "secrets": ".env tidak ter-track, tidak ada pola kunci rahasia",
+    "tests": "test runner terdeteksi dan exit 0",
+    "build": "build script terdeteksi dan exit 0",
+    "graph": "graphify-out/GRAPH_REPORT.md ada dan lebih baru dari kode",
+    "design-audit": "inspect.mjs 0 FAIL pada rute x lebar yang dikonfigurasi",
+    "ledger": "setiap fase approved punya bukti; skill wajib tercatat"
+  }
+}

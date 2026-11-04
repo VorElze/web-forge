@@ -1,0 +1,8 @@
+node_modules/
+graphify-out/
+.forge/audit/
+.forge/report.json
+.forge/report.md
+*.log
+.DS_Store
+Thumbs.db
