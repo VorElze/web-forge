@@ -426,7 +426,11 @@ function checkDesignAudit(cfg, url, noRun) {
     // A report left by an earlier run must never vouch for this one.
     const attempt = () => {
       if (exists(rp)) fs.rmSync(rp);
-      const r = run(`node "${inspector}" "${target}" --out "${outDir}"`, { timeout: 300000 });
+      // 900 s: halaman panjang pada mesin lambat (mis. beranda 7.000 px di PC
+      // kantor) butuh sekitar 325 s untuk menyelesaikan film scroll di 3 lebar.
+      // Batas 300 s mematikan inspector di tengah jalan dan melaporkan
+      // FAIL(0)/ETIMEDOUT, yang bukan temuan desain.
+      const r = run(`node "${inspector}" "${target}" --out "${outDir}"`, { timeout: 900000 });
       let report = null;
       if (exists(rp)) {
         try {
