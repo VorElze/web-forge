@@ -1,9 +1,6 @@
 ---
 name: web-forge
-description: >-
-  Build a website or app from the web-forge trigger phrases through nine gated
-  phases. For new visual pages, also use Hallmark and Awwwards when installed;
-  for review-only use Jury. Keep web-forge release gates authoritative.
+description: "Build a website or app from the web-forge trigger phrases through nine gated phases. For new visual pages, also use Hallmark and Awwwards when installed; for review-only use Jury. Keep web-forge release gates authoritative."
 version: 1.1.0
 author: Syamsi (VorElze), DeepSeek V4.1 Flash
 license: MIT
