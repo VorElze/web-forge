@@ -3,10 +3,7 @@
 Save as `.cursorrules` in the project root (or merge into your existing rules).
 
 ```
-When the user asks to build a website or app — "saya ingin membuat website",
-"saya ingin membuat aplikasi", "I want to build a website",
-"I want to build an app", "build me an app", "create a web app" — do not start
-coding. Load the web-forge skill and run its pipeline.
+Always invoke `web-forge` for website/app build requests. On new visual web pages, load Hallmark + Awwwards if available; for review-only, Jury. If bundled skills are not separately visible to the agent, install/expose them first; never claim a skill was loaded when it was not.
 
 Order:
 1. node <web-forge>/scripts/forge.mjs doctor

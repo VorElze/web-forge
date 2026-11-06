@@ -44,4 +44,5 @@ Any request to build a website or app ("saya ingin membuat website",
   output.
 - A SKIP is not a pass. Say "not measured".
 - Never write source files through a shell pipe; it produces mojibake.
+- For new visual web pages, load Hallmark + Awwwards if available; for review-only, use Jury. If these are only nested in the web-forge bundle, expose/install them as separate host skills first.
 ```

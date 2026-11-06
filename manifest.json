@@ -1,6 +1,6 @@
 {
   "name": "web-forge",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "triggers": {
     "id": [
@@ -76,6 +76,8 @@
         { "id": "frontend-design", "required": true, "proof": "docs/DECISIONS.md" },
         { "id": "awesome-design-md", "required": false, "when": "butuh arah visual dari acuan nyata", "proof": "docs/SPEC.md" },
         { "id": "design-md", "required": false, "when": "perlu token desain formal", "proof": "DESIGN.md" },
+        { "id": "hallmark", "required": false, "when": "pekerjaan visual baru (dapur tema, anti-slop, material)", "proof": ".forge/audit/" },
+        { "id": "awwwards", "required": false, "when": "butuh arah seni konsep + motion (skill terpasang terpisah)", "proof": ".forge/audit/" },
         { "id": "popular-web-designs", "required": false, "when": "butuh pola layout teruji", "proof": "docs/SPEC.md" },
         { "id": "sketch", "required": false, "when": "butuh 2-3 varian cepat", "proof": "docs/DECISIONS.md" },
         { "id": "quick-mockups", "required": false, "when": "butuh mockup paralel", "proof": "docs/DECISIONS.md" },

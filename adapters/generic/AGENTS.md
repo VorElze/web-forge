@@ -39,6 +39,8 @@ Rules:
   that exists on disk.
 - Report numbers, not adjectives. Paste gate output.
 - Write source files with an editor tool, never through a shell pipe.
+- For new visual web pages, use Hallmark + Awwwards if those skills are available; for review-only, use Jury. Read the bundled routing notes.
+- If bundled subskills are not installed in the host's skill path, do not claim they were loaded; read their SKILL.md as project context or ask to install them.
 ```
 
 ## If the client has no skill system

@@ -1,7 +1,10 @@
 ---
 name: web-forge
-description: Build a website or app from "saya ingin membuat website" / "I want to build an app" through nine gated phases.
-version: 1.0.0
+description: >-
+  Build a website or app from the web-forge trigger phrases through nine gated
+  phases. For new visual pages, also use Hallmark and Awwwards when installed;
+  for review-only use Jury. Keep web-forge release gates authoritative.
+version: 1.1.0
 author: Syamsi (VorElze), DeepSeek V4.1 Flash
 license: MIT
 platforms: [windows, macos, linux]
@@ -13,6 +16,7 @@ metadata:
       - writing-plans
       - graphify
       - design-taste-frontend
+      - hallmark
       - awwwards
       - jury
       - verification-before-completion
@@ -114,18 +118,39 @@ the reason into `docs/DECISIONS.md` and recording the SKIP in the ledger.
 
 ### Skill routing
 
-Load the skills that exist in your client; each phase names its own. The full
-map with the proof each skill must leave behind is in
+| Request | Skills | Notes |
+|---|---|---|
+| Website/app build trigger | `web-forge` | Run phases and measurable gates. |
+| New visual website/page | Hallmark + Awwwards, if both are separately installed/visible | Host selection/rules load them; the Forge CLI does not. Preserve web-forge release gates. |
+| Review/score only | Jury | Evidence-only review; do not turn it into a redesign. |
+| Skill missing from host | Do not claim it was loaded | Read bundled docs as reference or expose/install the skill directory, then reload. |
+
+The full phase map and expected proof are in
 `references/60-skills.md`. Absence of a skill never blocks a phase — but it
 changes the gate from PASS to SKIP, and SKIP fails `--release`.
 
 ### Bundled optional skills (`third-party/`)
 
-This repository vendors MIT-licensed copies of **`awwwards`** and **`jury`** from
-`juliobsz/skills` under `third-party/` (see `NOTICE.md`). They are **not** executed
-by `forge gate` automatically: install them into your agent's skill path if you
-want that workflow, and read `references/80-awwwards-juliobsz.md` for install +
-dependency notes.
+This repository vendors MIT-licensed copies of **`awwwards`**, **`jury`**,
+and **`hallmark`** under `third-party/` (see `NOTICE.md`).
+
+**Trigger routing for new website/app requests:** first use `web-forge` as the
+project lifecycle and gates. For distinctive visual design, load **both**
+`hallmark` and `awwwards` when available: Hallmark establishes the anti-slop
+floor, material truth, theme choice, and sloplint pass; Awwwards contributes
+concept-led art direction, motion choreography, and its deeper browser QA.
+Resolve conflicts in this order: user constraints and project design system →
+web-forge measurable/release gates → accessibility/performance/security floors
+from Hallmark → chosen visual direction. Do not force both full workflows when
+they conflict or the task is a small UI fix; state the selected scope in
+`docs/DECISIONS.md`. For a score-only review, use `jury` instead of both build
+skills.
+
+These skills are not invoked by `forge gate` itself. The host agent must load
+them through the matching skill trigger/description, a project rule, or an
+explicit `skill_view` call. `web-forge` can recommend/require them by written
+protocol, but that is separate from a CLI gate. See
+`references/80-awwwards-juliobsz.md` and `references/81-hallmark.md` for notes.
 
 ## Pitfalls
 

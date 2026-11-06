@@ -74,17 +74,20 @@ Repo ini bisa dipakai dari folder mana pun:
 node /path/ke/web-forge/scripts/forge.mjs gate --project /path/ke/proyek-anda
 ```
 
-### Paket opsional: `awwwards` + `jury` (MIT, upstream `juliobsz/skills`)
+### Paket opsional: `awwwards`, `jury`, dan `hallmark`
 
-Folder `third-party/` berisi salinan dua skill dari
-`https://github.com/juliobsz/skills`:
+Folder `third-party/` menyimpan salinan skill MIT dari `juliobsz/skills`
+(`awwwards`, `jury`) dan `Nutlope/hallmark` (`hallmark`), dengan provenance di
+`NOTICE.md`. Untuk permintaan build yang cocok dengan pemicu `web-forge`, aturan
+routing dalam skill memerintahkan agent memakai **Hallmark + Awwwards** pada
+pekerjaan visual baru bila keduanya tersedia; **jury** khusus review saja.
 
-- `third-party/awwwards/` — alur membangun situs “award-caliber” + skrip QA
-- `third-party/jury/` — alur penilaian situs dari bukti layar + audit
-
-Ini **tidak** dijalankan otomatis oleh `forge gate`. Pasang seperti skill agen
-biasa (salin/junction ke direktori skill host Anda) dan baca panduan ringkas
-di `references/80-awwwards-juliobsz.md`.
+Namun bundling tidak otomatis memasang/mendaftarkan subskill ke host agent.
+Hermes tidak mengindeks `SKILL.md` yang berada di bawah `third-party/`, sehingga
+salin/junction ketiga direktori skill ke skill path host, lalu reload sesi.
+Instruksi routing merupakan panduan pemilihan skill oleh agent — bukan gate
+CLI dan tidak dijamin host yang mengabaikan skill descriptions/rules. Baca
+`references/80-awwwards-juliobsz.md` dan `references/81-hallmark.md`.
 
 ---
 

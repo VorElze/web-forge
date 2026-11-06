@@ -40,11 +40,21 @@ remains. Missing capability is visible, never silent.
 
 ## Bundled third-party content
 
-This repository includes a verbatim copy of the `awwwards/` and `jury/` skill
-packages from `https://github.com/juliobsz/skills` (MIT).
+This repository includes the following separately licensed upstream skill
+packages. The repository's top-level MIT license applies only to original
+web-forge material; each upstream license is retained with its copy.
 
-- License text: `third-party/juliobsz-skills-LICENSE.txt`
-- Upstream revision: `third-party/UPSTREAM_REVISION.txt`
+- **Awwwards + Jury** from `https://github.com/juliobsz/skills` (MIT):
+  `third-party/awwwards/`, `third-party/jury/`.
+  License: `third-party/juliobsz-skills-LICENSE.txt`.
+  Revision: `third-party/UPSTREAM_REVISION.txt`.
+- **Hallmark** from `https://github.com/Nutlope/hallmark` (MIT):
+  `third-party/hallmark/` (includes the upstream `LICENSE`).
+  Revision: `third-party/HALLMARK_UPSTREAM.txt`.
+
+The bundled third-party skill source is redistributed under its original terms;
+web-forge's integration/routing documentation is original and covered by the
+repository license. Bundling is not affiliation or endorsement by upstreams.
 
 ## Trademarks
 

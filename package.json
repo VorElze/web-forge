@@ -1,9 +1,9 @@
 {
   "name": "web-forge",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
   "type": "module",
-  "description": "One command, nine gated phases, for building websites and apps with an AI agent.",
+  "description": "One command, nine gated phases, for building websites and apps with an AI agent. Bundles optional Hallmark + Awwwards visual workflows.",
   "bin": {
     "forge": "scripts/forge.mjs"
   },

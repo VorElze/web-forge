@@ -1,11 +1,14 @@
-# Paket opsional: `third-party/awwwards` + `third-party/jury` (MIT)
+# Paket opsional: `third-party/awwwards` + `third-party/jury` + `third-party/hallmark` (MIT)
 
-Repo ini menyertakan salinan utuh dua skill dari proyek sumber terbuka berikut
-(lisensi MIT, teks lisensi ada di `third-party/juliobsz-skills-LICENSE.txt`,
-revisi upstream tercatat di `third-party/UPSTREAM_REVISION.txt`):
+Repo ini menyertakan salinan utuh skill dari proyek sumber terbuka berikut
+(lisensi MIT, teks lisensi ada di `third-party/juliobsz-skills-LICENSE.txt` dan
+`third-party/hallmark/LICENSE`, revisi upstream tercatat di
+`third-party/UPSTREAM_REVISION.txt` dan `third-party/HALLMARK_UPSTREAM.txt`):
 
 - `https://github.com/juliobsz/skills` — paket `awwwards/` (membangun) dan
   `jury/` (menilai situs yang sudah ada)
+- `https://github.com/Nutlope/hallmark` — paket `hallmark/` (dapur visual:
+  anti-slop, tema, material, dan QA screenshot)
 
 Ini **bukan** bagian wajib `web-forge`. `forge gate` **tidak** menjalankan
 script ini secara otomatis. Mereka ada supaya Anda bisa memasangnya sebagai

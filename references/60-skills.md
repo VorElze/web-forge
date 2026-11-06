@@ -48,6 +48,8 @@ node scripts/forge.mjs ledger mark graphify --phase P3 --proof graphify-out/GRAP
 | `codebase-design` | `docs/DECISIONS.md` |
 | `design-taste-frontend` | `.forge/audit/` |
 | `frontend-design` | `docs/DECISIONS.md` |
+| `hallmark` (opsional, visual baru) | `.forge/audit/` |
+| `awwwards` (opsional, arah seni + motion) | `.forge/audit/` |
 
 ## P4 — Layar inti
 
