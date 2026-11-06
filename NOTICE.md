@@ -2,8 +2,9 @@
 
 ## What this repository contains
 
-All text, scripts, and documents here are original work, licensed MIT (see
-`LICENSE`). Nothing in this repository is copied from another skill library.
+Most text, scripts, and documents here are original work, licensed MIT (see
+`LICENSE`). This repository **vendors** a MIT-licensed third-party skill bundle
+under `third-party/` (see **`NOTICE.md` → Bundled third-party content**).
 
 ## What it references
 
@@ -36,6 +37,14 @@ remains. Missing capability is visible, never silent.
   (original, dependency-free) writes a shallower map to the same path.
 - **Node.js** — runtime requirement, MIT-style license, not bundled.
 - **Playwright / playwright-cli** — optional, not bundled.
+
+## Bundled third-party content
+
+This repository includes a verbatim copy of the `awwwards/` and `jury/` skill
+packages from `https://github.com/juliobsz/skills` (MIT).
+
+- License text: `third-party/juliobsz-skills-LICENSE.txt`
+- Upstream revision: `third-party/UPSTREAM_REVISION.txt`
 
 ## Trademarks
 

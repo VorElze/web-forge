@@ -13,6 +13,8 @@ metadata:
       - writing-plans
       - graphify
       - design-taste-frontend
+      - awwwards
+      - jury
       - verification-before-completion
       - ponytail
 ---
@@ -116,6 +118,14 @@ Load the skills that exist in your client; each phase names its own. The full
 map with the proof each skill must leave behind is in
 `references/60-skills.md`. Absence of a skill never blocks a phase — but it
 changes the gate from PASS to SKIP, and SKIP fails `--release`.
+
+### Bundled optional skills (`third-party/`)
+
+This repository vendors MIT-licensed copies of **`awwwards`** and **`jury`** from
+`juliobsz/skills` under `third-party/` (see `NOTICE.md`). They are **not** executed
+by `forge gate` automatically: install them into your agent's skill path if you
+want that workflow, and read `references/80-awwwards-juliobsz.md` for install +
+dependency notes.
 
 ## Pitfalls
 

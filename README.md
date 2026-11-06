@@ -74,6 +74,18 @@ Repo ini bisa dipakai dari folder mana pun:
 node /path/ke/web-forge/scripts/forge.mjs gate --project /path/ke/proyek-anda
 ```
 
+### Paket opsional: `awwwards` + `jury` (MIT, upstream `juliobsz/skills`)
+
+Folder `third-party/` berisi salinan dua skill dari
+`https://github.com/juliobsz/skills`:
+
+- `third-party/awwwards/` — alur membangun situs “award-caliber” + skrip QA
+- `third-party/jury/` — alur penilaian situs dari bukti layar + audit
+
+Ini **tidak** dijalankan otomatis oleh `forge gate`. Pasang seperti skill agen
+biasa (salin/junction ke direktori skill host Anda) dan baca panduan ringkas
+di `references/80-awwwards-juliobsz.md`.
+
 ---
 
 ## Perintah
